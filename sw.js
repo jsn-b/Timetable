@@ -1,12 +1,12 @@
 const CACHE_NAME = 'jarvis-timetable-v1';
 const urlsToCache = [
-  '/',
-  '/index.html',
-  '/style.css',
-  '/script.js',
-  '/icon-192.png',
-  '/icon-512.png',
-  '/font.otf',
+  'Timetable/',
+  'Timetable/index.html',
+  'Timetable/style.css',
+  'Timetable/script.js',
+  'Timetable/icon-192.png',
+  'Timetable/icon-512.png',
+  'Timetable/font.otf',
   
 ];
 
