@@ -1,0 +1,158 @@
+:root {
+    --jarvis-blue-dark: #0a1128;
+    --jarvis-blue-medium: #122240;
+    --jarvis-blue-light: #203f70;
+    --jarvis-accent-glow: #00ffea; /* Neon blue/cyan for highlights and glow */
+    --text-color-light: #e0f2f1;
+    --text-color-dark: #a7d9f7;
+    --border-glow: rgba(0, 255, 234, 0.4);
+}
+
+@font-face {
+    font-family: 'Orbitron';
+    src: url(/orbitron.otf);
+}
+
+@font-face {
+    font-family: 'Share Tech Mono';
+    src: url(/font.otf);
+}
+body {
+    font-family: 'Share Tech Mono', monospace;
+    background-color: var(--jarvis-blue-dark);
+    color: var(--text-color-light);
+    display: flex;
+    justify-content: center;
+    align-items: flex-start;
+    min-height: 100vh;
+    margin: 0;
+    padding: 20px;
+    overflow-x: hidden;
+}
+
+.container {
+    background-color: var(--jarvis-blue-medium);
+    padding: 2em;
+    border-radius: 10px;
+    box-shadow: 0 0 30px var(--border-glow);
+    width: 95%;
+    max-width: 1600px;
+    border: 1px solid var(--jarvis-blue-light);
+    position: relative;
+    overflow: hidden;
+}
+
+.main-title {
+    font-family: 'Orbitron', sans-serif;
+    text-align: center;
+    color: var(--jarvis-accent-glow);
+    text-shadow: 0 0 15px var(--jarvis-accent-glow), 0 0 25px var(--jarvis-accent-glow);
+    margin-bottom: 2em;
+    letter-spacing: 2px;
+    font-size: 2.5em;
+    animation: pulseGlow 2s infinite alternate;
+}
+
+@keyframes pulseGlow {
+    from { text-shadow: 0 0 10px var(--jarvis-accent-glow), 0 0 20px var(--jarvis-accent-glow); }
+    to { text-shadow: 0 0 15px var(--jarvis-accent-glow), 0 0 30px var(--jarvis-accent-glow); }
+}
+
+.daily-timetables-grid {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 30px;
+}
+
+.day-timetable-card {
+    background-color: var(--jarvis-blue-medium);
+    border: 1px solid var(--jarvis-blue-light);
+    border-radius: 8px;
+    padding: 1.5em;
+    box-shadow: 0 0 10px var(--border-glow), inset 0 0 5px var(--border-glow);
+    position: relative;
+    overflow: hidden;
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+    width: 80%;
+}
+
+.day-timetable-card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 0 15px var(--jarvis-accent-glow), inset 0 0 8px var(--jarvis-accent-glow);
+}
+
+.day-timetable-card h2 {
+    font-family: 'Orbitron', sans-serif;
+    color: var(--jarvis-accent-glow);
+    text-align: center;
+    margin-top: 0;
+    margin-bottom: 1em;
+    text-shadow: 0 0 8px var(--jarvis-accent-glow);
+    font-size: 1.5em;
+    border-bottom: 1px dashed var(--jarvis-blue-light);
+    padding-bottom: 0.5em;
+}
+
+.timetable {
+    width: 100%;
+    border-collapse: collapse;
+    margin-top: 1em;
+}
+
+.timetable th, .timetable td {
+    padding: 10px 8px;
+    text-align: center;
+    border: 1px solid var(--jarvis-blue-light);
+    color: var(--text-color-light);
+    font-size: 0.9em;
+}
+
+.timetable th:first-child, .timetable td:first-child { width: 30%; }
+.timetable th:last-child, .timetable td:last-child { width: 70%; }
+
+.timetable thead th {
+    background-color: var(--jarvis-blue-light);
+    color: var(--jarvis-accent-glow);
+    font-weight: 700;
+    text-shadow: 0 0 5px var(--jarvis-accent-glow);
+    border-bottom: 2px solid var(--jarvis-accent-glow);
+}
+
+.timetable tbody tr:hover {
+    background-color: #2a4a7a;
+}
+
+.timetable td.time {
+    font-weight: 700;
+    color: var(--text-color-dark);
+}
+
+.subject-math { background-color: rgba(248, 215, 218, 0.1); color: #f8d7da; }
+.subject-physics { background-color: rgba(209, 236, 241, 0.1); color: #d1ecf1; }
+.subject-os { background-color: rgba(212, 237, 218, 0.1); color: #d4edda; }
+.subject-cn { background-color: rgba(255, 243, 205, 0.1); color: #fff3cd; }
+.subject-se-lab { background-color: rgba(226, 217, 243, 0.1); color: #e2d9f3; }
+.subject-break { background-color: rgba(240, 240, 240, 0.05); font-style: italic; color: #b0c4de; }
+
+.current-day-highlight {
+    border: 2px solid var(--jarvis-accent-glow);
+    box-shadow: 0 0 20px var(--jarvis-accent-glow), inset 0 0 10px var(--jarvis-accent-glow);
+    transform: scale(1.02);
+}
+
+.current-period-highlight {
+    background-color: var(--jarvis-accent-glow) !important;
+    color: var(--jarvis-blue-dark) !important;
+    font-weight: bold;
+    text-shadow: none !important;
+}
+
+.current-period-highlight .time {
+    color: var(--jarvis-blue-dark) !important;
+    text-shadow: none !important;
+}
+
+.current-period-highlight td:last-child {
+    color: var(--jarvis-blue-dark) !important;
+}
