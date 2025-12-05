@@ -1,64 +1,123 @@
 document.addEventListener('DOMContentLoaded', function() {
-    // --- YOUR TIMETABLE DATA (Organized by Day) ---
+    // --- SUBJECT DETAILS (NEW: for hover tooltips) ---
+    const subjectDetails = {
+        'CNS': 'Cryptography and Network Security',
+        'ML': 'Machine Learning',
+        'EE': 'Entrepreneurship Education',
+        'ELCS LAB': 'English Language and Communication Skills Lab',
+        'CDC': 'Career Development Course',
+        'ELECTIVE-II': 'Program Elective II',
+        'ELECTIVE-III': 'Program Elective III',
+        'MINI PROJ': 'Mini Project',
+        'Break': 'Break'
+    };
+
+    // --- CSE 3B TIMETABLE DATA (Sec-B only, Mon–Sat) ---
+    // Period times (common to all days):
+    // P1 09:00-09:50, P2 09:50-10:40, Break 10:40-10:50,
+    // P3 10:50-11:40, P4 11:40-12:30, Break 12:30-13:30,
+    // P5 13:30-14:20, P6 14:20-15:10, Break 15:10-15:20,
+    // P7 15:20-16:10, P8 16:10-17:00.
     const timetableDataByDay = {
+        // MONDAY – Sec-B row in sheet (left side, MONDAY)
         'Monday': [
-            { time: '08:40 - 09:30', subject: 'Cloud Computing' },
-            { time: '09:30 - 10:20', subject: 'Software Engineering' },
-            { time: '10:20 - 10:30', subject: 'Break' },
-            { time: '10:30 - 11:20', subject: 'Operating Systems' },
-            { time: '11:20 - 12:10', subject: 'Computer Networks' },
-            { time: '12:10 - 01:00', subject: 'Cloud Computing'}
+            { time: '09:00 - 09:50', subject: '' },              // P1
+            { time: '09:50 - 10:40', subject: 'CDC' },           // P2
+            { time: '10:40 - 10:50', subject: 'Break' },         // Short Break
+            { time: '10:50 - 11:40', subject: 'CNS' },           // P3
+            { time: '11:40 - 12:30', subject: 'ELECTIVE-II' },   // P4
+            { time: '12:30 - 13:30', subject: 'Break' },         // Lunch
+            { time: '13:30 - 14:20', subject: '' },              // P5
+            { time: '14:20 - 15:10', subject: '' },              // P6
+            { time: '15:10 - 15:20', subject: 'Break' },         // Short Break
+            { time: '15:20 - 16:10', subject: 'MINI PROJ' },     // P7
+            { time: '16:10 - 17:00', subject: 'ELECTIVE-III' }   // P8
         ],
+
+        // TUESDAY – Sec-B (left side, TUESDAY)
         'Tuesday': [
-            { time: '01:30 - 02:20', subject: 'Cloud Computing' },
-            { time: '02:20 - 03:10', subject: 'CN Lab' },
-            { time: '03:10 - 03:20', subject: 'Break' },
-            { time: '03:20 - 04:10', subject: 'CN Lab' },
-            { time: '04:10 - 05:00', subject: 'CN Lab' },
-            { time: '05:00 - 05:50', subject: 'Cloud Computing'}
+            { time: '09:00 - 09:50', subject: '' },              // P1
+            { time: '09:50 - 10:40', subject: 'CNS' },           // P2
+            { time: '10:40 - 10:50', subject: 'Break' },
+            { time: '10:50 - 11:40', subject: 'ML' },            // P3
+            { time: '11:40 - 12:30', subject: 'ML' },            // P4
+            { time: '12:30 - 13:30', subject: 'Break' },
+            { time: '13:30 - 14:20', subject: 'ELECTIVE-II' },   // P5
+            { time: '14:20 - 15:10', subject: '' },              // P6
+            { time: '15:10 - 15:20', subject: 'Break' },
+            { time: '15:20 - 16:10', subject: '' },              // P7
+            { time: '16:10 - 17:00', subject: '' }               // P8
         ],
+
+        // WEDNESDAY – Sec-B (left side, WEDNESDAY)
         'Wednesday': [
-            { time: '08:40 - 09:30', subject: 'Artificial Intelligence' },
-            { time: '09:30 - 10:20', subject: 'Operating Systems' },
-            { time: '10:20 - 10:30', subject: 'Break' },
-            { time: '10:30 - 11:20', subject: 'Software Engineering' },
-            { time: '11:20 - 12:10', subject: 'Software Engineering' },
-            { time: '12:10 - 01:00', subject: 'Computer Networks'}
-        ]
-        ,
+            { time: '09:00 - 09:50', subject: '' },              // P1
+            { time: '09:50 - 10:40', subject: 'CDC' },           // P2
+            { time: '10:40 - 10:50', subject: 'Break' },
+            { time: '10:50 - 11:40', subject: 'CNS' },           // P3
+            { time: '11:40 - 12:30', subject: 'EE' },            // P4
+            { time: '12:30 - 13:30', subject: 'Break' },
+            { time: '13:30 - 14:20', subject: '' },              // P5
+            { time: '14:20 - 15:10', subject: 'ML' },            // P6
+            { time: '15:10 - 15:20', subject: 'Break' },
+            { time: '15:20 - 16:10', subject: 'ML' },            // P7
+            { time: '16:10 - 17:00', subject: 'ELECTIVE-III' }   // P8
+        ],
+
+        // THURSDAY – Sec-B (right side of MONDAY block, THURSDAY)
         'Thursday': [
-            { time: '01:30 - 02:20', subject: 'Computer Networks' },
-            { time: '02:20 - 03:10', subject: 'SE Lab' },
-            { time: '03:10 - 03:20', subject: 'Break' },
-            { time: '03:20 - 04:10', subject: 'SE Lab' },
-            { time: '04:10 - 05:00', subject: 'SE Lab' },
-            { time: '05:00 - 05:50', subject: 'Artificial Intelligence'}
+            { time: '09:00 - 09:50', subject: 'ELECTIVE-II' },   // P1
+            { time: '09:50 - 10:40', subject: 'ELCS LAB' },      // P2
+            { time: '10:40 - 10:50', subject: 'Break' },
+            { time: '10:50 - 11:40', subject: '' },              // P3
+            { time: '11:40 - 12:30', subject: '' },              // P4
+            { time: '12:30 - 13:30', subject: 'Break' },
+            { time: '13:30 - 14:20', subject: '' },              // P5
+            { time: '14:20 - 15:10', subject: 'EE' },            // P6
+            { time: '15:10 - 15:20', subject: 'Break' },
+            { time: '15:20 - 16:10', subject: '' },              // P7
+            { time: '16:10 - 17:00', subject: 'ELECTIVE-III' }   // P8
         ],
+
+        // FRIDAY – Sec-B (right side of TUESDAY block, FRIDAY)
         'Friday': [
-            { time: '08:40 - 09:30', subject: 'Artificial Intelligence' },
-            { time: '09:30 - 10:20', subject: 'ELCS' },
-            { time: '10:20 - 10:30', subject: 'Break' },
-            { time: '10:30 - 11:20', subject: 'ELCS' },
-            { time: '11:20 - 12:10', subject: 'ELCS' },
-            { time: '12:10 - 01:00', subject: 'Cloud Computing'}
+            { time: '09:00 - 09:50', subject: '' },              // P1
+            { time: '09:50 - 10:40', subject: 'CDC' },           // P2
+            { time: '10:40 - 10:50', subject: 'Break' },
+            { time: '10:50 - 11:40', subject: 'CNS' },           // P3
+            { time: '11:40 - 12:30', subject: 'ELECTIVE-II' },   // P4
+            { time: '12:30 - 13:30', subject: 'Break' },
+            { time: '13:30 - 14:20', subject: '' },              // P5
+            { time: '14:20 - 15:10', subject: 'EE' },            // P6
+            { time: '15:10 - 15:20', subject: 'Break' },
+            { time: '15:20 - 16:10', subject: 'MINI PROJ' },     // P7
+            { time: '16:10 - 17:00', subject: '' }               // P8
         ],
+
+        // SATURDAY – Sec-B (right side of WEDNESDAY block, SATURDAY)
         'Saturday': [
-            { time: '01:30 - 02:20', subject: 'Operating Systems' },
-            { time: '02:20 - 03:10', subject: 'OS Lab' },
-            { time: '03:10 - 03:20', subject: 'Break' },
-            { time: '03:20 - 04:10', subject: 'OS Lab' },
-            { time: '04:10 - 05:00', subject: 'OS Lab' },
-            { time: '05:00 - 05:50', subject: 'Artificial Intelligence'}
+            { time: '09:00 - 09:50', subject: '' },              // P1
+            { time: '09:50 - 10:40', subject: 'ELECTIVE-II' },   // P2
+            { time: '10:40 - 10:50', subject: 'Break' },
+            { time: '10:50 - 11:40', subject: 'ELECTIVE-III' },  // P3
+            { time: '11:40 - 12:30', subject: '' },              // P4
+            { time: '12:30 - 13:30', subject: 'Break' },
+            { time: '13:30 - 14:20', subject: '' },              // P5
+            { time: '14:20 - 15:10', subject: 'ELECTIVE-II' },   // P6
+            { time: '15:10 - 15:20', subject: 'Break' },
+            { time: '15:20 - 16:10', subject: 'MINI PROJ' },     // P7
+            { time: '16:10 - 17:00', subject: '' }               // P8
         ]
     };
 
     const dailyTimetablesContainer = document.getElementById('daily-timetables-container');
-    const daysOrder = ['Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday','Saturday'];
-    const now = new Date();
-    const currentDayIndex = now.getDay();
-    const currentDayName = daysOrder[currentDayIndex - 1];
+    const daysOrder = ['Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday'];
 
-    // Reorder days so current day is first
+    const now = new Date();
+    const currentDayIndex = now.getDay(); // 0 = Sunday, 1 = Monday, ...
+    const currentDayName = daysOrder[currentDayIndex - 1]; // existing logic preserved
+
+    // Reorder days so current day is first (existing behavior)
     let orderedDays = [...daysOrder];
     if (currentDayName && daysOrder.includes(currentDayName)) {
         const index = orderedDays.indexOf(currentDayName);
@@ -106,6 +165,7 @@ document.addEventListener('DOMContentLoaded', function() {
         const tbody = document.createElement('tbody');
         daySchedule.forEach(slot => {
             const row = document.createElement('tr');
+
             const timeCell = document.createElement('td');
             timeCell.classList.add('time');
             timeCell.textContent = slot.time;
@@ -114,6 +174,12 @@ document.addEventListener('DOMContentLoaded', function() {
             const subjectCell = document.createElement('td');
             subjectCell.textContent = slot.subject;
             subjectCell.classList.add(createClassFromSubject(slot.subject));
+
+            // NEW: add tooltip with full subject name if available
+            if (subjectDetails[slot.subject]) {
+                subjectCell.title = subjectDetails[slot.subject];
+            }
+
             row.appendChild(subjectCell);
             tbody.appendChild(row);
         });
@@ -122,10 +188,10 @@ document.addEventListener('DOMContentLoaded', function() {
         dailyTimetablesContainer.appendChild(dayCard);
     });
 
-    // --- NEW: HIGHLIGHT CURRENT PERIOD ---
+    // --- CURRENT PERIOD HIGHLIGHT (unchanged logic) ---
     function highlightCurrentPeriod() {
         const currentDayCard = document.querySelector('.current-day-highlight');
-        if (!currentDayCard) return; // Exit if not a weekday
+        if (!currentDayCard) return; // Exit if not a weekday (per existing behavior)
 
         const rows = currentDayCard.querySelectorAll('tbody tr');
         const now = new Date();
